@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS monster (
     image varchar(155) not null,
     type int[] not null,
     hit_point_stat int not null,
-    attach_stat int not null,
+    attack_stat int not null,
     defence_stat int not null,
     speed_stat int not null,
     created_at timestamp not null,
@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS user (
     id BIGSERIAL PRIMARY KEY,
     name varchar(100) not null,
     email varchar(100) not null,
+    password varchar(100) not null,
     created_at timestamp not null,
     updated_at timestamp not null
 );
