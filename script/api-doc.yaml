@@ -1,0 +1,345 @@
+openapi: 3.0.3
+info: 
+  title: "MonsterDex API"
+  description: "API documentation for MonsterDex platform"
+  version: "1"
+tags:
+  - name: monster
+    description: Access to monster list
+  - name: admin
+    description: Access to backoffice
+  - name: user
+    description: Access to user related service
+paths:
+  /monsters:
+    x-summary: List all monster
+    x-description: Collection of all monster
+    get:
+      summary: List all monster
+      tags:
+        - monster
+      parameters:
+        - name: name
+          in: query
+          description: Name to filter by
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Type to filter by
+          required: false
+          schema:
+            type: string
+            enum:
+              - GRASS
+              - PSYCHIC
+              - FLYING
+              - FIRE
+              - WATER
+              - ELECTRIC
+              - BUG
+        - name: sort
+          in: query
+          description: Sort result by
+          required: false
+          schema:
+            type: string
+            default: id
+            enum:
+              - name
+              - id
+        - name: sort_type
+          in: query
+          description: Sort type result by
+          required: false
+          schema:
+            type: string
+            default: ascending
+            enum:
+              - ascending
+              - descending
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MonsterList'
+
+  /monster/{monster_id}:
+    x-summary: Detail monster
+    x-description: Detail monster
+    get:
+      summary: Detail monster
+      tags: 
+        - monster
+      parameters:
+        - name: monster_id
+          in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Monster'
+  /monster/{monster_id}/capture:
+    post:
+      summary: Capture monster
+      tags:
+        - monster
+      parameters:
+        - name: monster_id
+          in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+  /admin/monster:
+    x-summary: add monster
+    x-description: add monter
+    post:
+      summary: add new monster
+      tags: 
+        - admin
+      description: add new monster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Monster'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Monster'
+        '405':
+          description: Invalid input
+      security:
+        - api_key: []
+  /admin/monster/{monster_id}:
+    put:
+      summary: update monster
+      tags: 
+        - admin
+      description: update meta
+      parameters:
+        - name: monster_id
+          in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Monster'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Monster'
+        '405':
+          description: Invalid input
+      security:
+        - api_key: []
+    delete:
+      summary: delete monster
+      tags: 
+        - admin
+      description: delete meta
+      parameters:
+        - name: monster_id
+          in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '404':
+          description: Monster not found
+      security:
+        - api_key: []
+  /login:
+    post:
+      tags:
+        - user
+      description: user login
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: successfull operation
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: success
+                  token:
+                    type: string
+                    example: token
+        '404':
+          description: user not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: user not found
+  /logout:
+    post:
+      tags:
+        - user
+      description: user logout
+      responses:
+        '200':
+          description: successfull operation
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Success'
+components:
+  schemas:
+    Success:
+      type: object
+      properties:
+        message:
+          type: string
+          example: success
+    Monster:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        name:
+          type: string
+          example: Lugia
+        sub_name:
+          type: string
+          example: Diving Monster
+        monster_type:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            type: string
+            example: PHYSIC
+        image:
+          type: string
+          example: https://assets.pokemon.com/assets/cms2/img/pokedex/full/249.png
+        description:
+          type: string
+          example: Quisque ut urna non turpis facilisis laoreet. Nullam et porttitor leo. Morbi non dolor et quam maximus hendrerit. Nullam sem diam, mollis et ultrices ultricies, porta nec sapien. Vestibulum a efficitur nibh, sed ultricies mi. Nunc pulvinar ornare mi nec vestibulum. Morbi luctus nisi eu nisi consectetur porttitor. Integer in.
+        height:
+          type: string
+          example: 5.1 m
+        weight:
+          type: string
+          example: 216 kg
+        hit_point:
+          type: integer
+          example: 400
+        attack:
+          type: integer
+          example: 300
+        deffense:
+          type: integer
+          example: 350
+        speed:
+          type: integer
+          example: 390
+    MonsterList:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        name:
+          type: string
+          example: Lugia
+        sub_name:
+          type: string
+          example: Diving Monster
+        monster_type:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            type: string
+            example: PHYSIC
+        image:
+          type: string
+          example: https://assets.pokemon.com/assets/cms2/img/pokedex/full/249.png
+        captured:
+          type: boolean
+          example: false
+    Login:
+      type: object
+      properties:
+        username: 
+          type: string
+        password:
+          type: string
+  requestBodies:
+    Monster:
+      description: Monster object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Monster'
+    Login:
+      description: login object
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username: 
+                type: string
+              password:
+                type: string
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
