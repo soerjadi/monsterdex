@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS monster (
     id BIGSERIAL PRIMARY KEY,
     name varchar(100) not null,
-    sub_name varchar(155) not null,
+    tag_name varchar(155) not null,
     description text not null,
     height double precision default 0.0 not null,
     weight integer not null,
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS monster (
     updated_at timestamp not null
 );
 
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS users (
     id BIGSERIAL PRIMARY KEY,
     name varchar(100) not null,
     email varchar(100) not null,
@@ -26,8 +26,17 @@ CREATE TABLE IF NOT EXISTS user (
 
 CREATE TABLE IF NOT EXISTS user_monster_link (
     id BIGSERIAL PRIMARY KEY,
-    moster_id BIGINT not null,
+    monster_id BIGINT not null,
     user_id BIGINT not null,
     capture_status boolean not null,
-    created_at timestamp not null
+    created_at timestamp not null,
+    FOREIGN KEY (monster_id) REFERENCES monster(id) ON DELETE CASCADE
 );
+
+CREATE INDEX user_id_index ON user_monster_link USING btree(user_id);
+CREATE INDEX user_id_monster_id_index ON user_monster_link USING btree(user_id, monster_id);
+
+CREATE INDEX name_index ON users USING btree(name);
+
+CREATE INDEX name_index ON monster USING btree(name);
+CREATE INDEX type_index ON monster USING btree(type);
