@@ -33,6 +33,14 @@ CREATE TABLE IF NOT EXISTS user_monster_link (
     FOREIGN KEY (monster_id) REFERENCES monster(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS access_token (
+    token text PRIMARY KEY not null,
+    user_id BIGINT not null,
+    created_at timestamp not null,
+    valid_thru timestamp not null,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 CREATE INDEX user_id_index ON user_monster_link USING btree(user_id);
 CREATE INDEX user_id_monster_id_index ON user_monster_link USING btree(user_id, monster_id);
 
@@ -40,3 +48,6 @@ CREATE INDEX name_index ON users USING btree(name);
 
 CREATE INDEX name_index ON monster USING btree(name);
 CREATE INDEX type_index ON monster USING btree(type);
+
+CREATE INDEX token_access_token ON access_token USING btree(token);
+CREATE INDEX user_id_access_token ON access_token USING btree(user_id);
