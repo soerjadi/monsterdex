@@ -47,10 +47,10 @@ type MonsterType struct {
 }
 
 type MonsterListRequest struct {
-	Query         string `json:"query"`
-	QueryType     []int  `json:"query_type"`
-	Sort          string `json:"sort"`
-	SortDirection int    `json:"sort_direction"`
+	Query         *string `json:"query"`
+	QueryType     *[]int  `json:"query_type"`
+	Sort          *string `json:"sort"`
+	SortDirection *int    `json:"sort_direction"`
 }
 
 type MonsterRequest struct {
@@ -62,21 +62,20 @@ type MonsterRequest struct {
 	Image        string  `json:"image"`
 	Type         []int   `json:"type"`
 	HitPoint     int     `json:"hit_point_stat"`
-	AttackPoint  int     `json:"attach_point_stat"`
+	AttackPoint  int     `json:"attack_point_stat"`
 	DefencePoint int     `json:"defence_point_stat"`
 	SpeedPoint   int     `json:"speed_point_stat"`
-	ID           int64   `json:"id"`
+	ID           int64   `json:"id,omitempty"`
 }
 
 type CapturedMonster struct {
-	ID            int64 `db:"id"`
 	MonsterID     int64 `db:"monster_id"`
 	UserID        int64 `db:"user_id"`
 	CaptureStatus bool  `db:"capture_status"`
 }
 
 type CaptureMonsterReq struct {
-	UserID        int64
-	MonsterID     int64
-	CaptureStatus bool
+	UserID        int64 `json:"user_id,omitempty"`
+	MonsterID     int64 `json:"monster_id,omitempty"`
+	CaptureStatus bool  `json:"capture_status"`
 }

@@ -50,5 +50,6 @@ func GetRepository(db *sqlx.DB) (Repository, error) {
 
 	return &monsterRepository{
 		query: query,
+		DB:    db,
 	}, nil
 }

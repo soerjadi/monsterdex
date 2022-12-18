@@ -82,8 +82,8 @@ const (
 		NOW()
 	) ON CONFLICT (monster_id, user_id) DO 
 	UPDATE SET
-		capture_status=$4
-	RETURNING id, monster_id, user_id, capture_status
+		capture_status=$3
+	RETURNING monster_id, user_id, capture_status
 	`
 
 	insertMonster = `

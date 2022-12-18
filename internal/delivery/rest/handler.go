@@ -17,6 +17,7 @@ func (fn HandlerFunc) Serve(w http.ResponseWriter, r *http.Request) {
 
 	if data != nil && err == nil {
 		response.Data = data
+		response.Status = "success"
 
 		if buff, err := json.Marshal(response); err == nil {
 			_, err := w.Write(buff)

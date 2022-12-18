@@ -304,7 +304,6 @@ func TestCaptureMonster(t *testing.T) {
 					mock.EXPECT().
 						CaptureMonster(gomock.Any(), gomock.Any()).
 						Return(model.CapturedMonster{
-							ID:            1,
 							UserID:        1,
 							MonsterID:     1,
 							CaptureStatus: true,
@@ -314,7 +313,6 @@ func TestCaptureMonster(t *testing.T) {
 				}(),
 			},
 			want: model.CapturedMonster{
-				ID:            1,
 				UserID:        1,
 				MonsterID:     1,
 				CaptureStatus: true,

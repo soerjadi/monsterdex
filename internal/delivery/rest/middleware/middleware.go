@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/soerjadi/monsterdex/internal/delivery/rest"
+	"github.com/soerjadi/monsterdex/internal/model"
 	"github.com/soerjadi/monsterdex/internal/model/constant"
 	"github.com/soerjadi/monsterdex/internal/usecase/access_token"
 	"github.com/soerjadi/monsterdex/internal/usecase/user"
@@ -102,8 +103,14 @@ func OnlyAdminLoggedIn(tokenManagement access_token.Usecase, userManagement user
 				return
 			}
 
-			_, err = userManagement.GetUserByID(r.Context(), at.UserID)
+			user, err := userManagement.GetUserByID(r.Context(), at.UserID)
 			if err != nil {
+				unauthorizedResp(w, r)
+
+				return
+			}
+
+			if user.Role != model.ADMIN_ROLE {
 				unauthorizedResp(w, r)
 
 				return

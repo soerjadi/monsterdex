@@ -43,7 +43,7 @@ func (r *monsterRepository) GetListMonster(ctx context.Context, req model.Monste
 func (r *monsterRepository) GetDetailMonster(ctx context.Context, id int64, userID int64) (model.Monster, error) {
 	var res model.Monster
 
-	err := r.query.getDetailMonster.GetContext(ctx, &res, id)
+	err := r.query.getDetailMonster.GetContext(ctx, &res, userID, id)
 	if err != nil {
 		log.ErrorWithFields("repository.monster.GetDetailMonster fail get context", log.KV{
 			"err":  err,

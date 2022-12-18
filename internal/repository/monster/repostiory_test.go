@@ -283,7 +283,6 @@ func TestCaptureMonster(t *testing.T) {
 				return sqlx.NewDb(db, "postgres"), db, mock
 			},
 			want: model.CapturedMonster{
-				ID:            1,
 				UserID:        1,
 				MonsterID:     1,
 				CaptureStatus: true,
