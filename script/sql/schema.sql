@@ -26,12 +26,13 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS user_monster_link (
-    id BIGSERIAL PRIMARY KEY,
     monster_id BIGINT not null,
     user_id BIGINT not null,
     capture_status boolean not null,
     created_at timestamp not null,
-    FOREIGN KEY (monster_id) REFERENCES monster(id) ON DELETE CASCADE
+    FOREIGN KEY (monster_id) REFERENCES monster(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    PRIMARY KEY (monster_id, user_id)
 );
 
 CREATE TABLE IF NOT EXISTS access_token (
@@ -41,9 +42,6 @@ CREATE TABLE IF NOT EXISTS access_token (
     valid_thru timestamp not null,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
-
-CREATE INDEX user_id_index ON user_monster_link USING btree(user_id);
-CREATE INDEX user_id_monster_id_index ON user_monster_link USING btree(user_id, monster_id);
 
 CREATE INDEX name_index ON users USING btree(name);
 
