@@ -46,8 +46,18 @@ CREATE INDEX user_id_monster_id_index ON user_monster_link USING btree(user_id, 
 
 CREATE INDEX name_index ON users USING btree(name);
 
-CREATE INDEX name_index ON monster USING btree(name);
+CREATE INDEX name_monster_index ON monster USING btree(name);
 CREATE INDEX type_index ON monster USING btree(type);
 
 CREATE INDEX token_access_token ON access_token USING btree(token);
 CREATE INDEX user_id_access_token ON access_token USING btree(user_id);
+
+INSERT INTO monster(id, name, tag_name, description, height, weight, image, type, hit_point_stat, attack_stat, defence_stat, speed_stat, created_at, updated_at)
+    VALUES(1, 'Lugia', 'Diving Monster', 'In eleifend nec dui vitae condimentum. Maecenas varius euismod orci, id facilisis nisi tincidunt id. Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 5.1, 216, 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/249.png', '{2,3}', 350, 420, 280, 480, now(), now());
+
+INSERT INTO users(id, name, email, password, created_at, updated_at) VALUES(1, 'pokemon', 'pokemon@monsterdex.com', '$2a$10$9Lfiyg7MEpz32Aa/mgEZd.Kw0aDu0qqHImllNtOOKl88jO0EsmsXm', now(), now());
+
+INSERT INTO access_token(token, user_id, created_at, valid_thru) VALUES('fe3d771d45fe33c33de003af028149ece72b14f386da5f2f2a7ccc942e2f5cb090702091dbb1488aae45a3076e8ed5fa06b6aa21beaa488ddaa33c0d036fb09a', 1, now(), now() + interval '7' day);
+
+INSERT INTO user_monster_link(monster_id, user_id, capture_status, created_at) VALUES(1, 1, true, now());
+
