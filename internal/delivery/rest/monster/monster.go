@@ -128,12 +128,12 @@ func (h *Handler) CapturedMonster(w http.ResponseWriter, r *http.Request) (inter
 	req.MonsterID = monsterID
 	req.UserID = userID
 
-	res, err := h.usecase.CaptureMonster(r.Context(), req)
+	_, err = h.usecase.CaptureMonster(r.Context(), req)
 	if err != nil {
 		return nil, err
 	}
 
-	return res, nil
+	return "", nil
 }
 
 func (h *Handler) InsertMonster(w http.ResponseWriter, r *http.Request) (interface{}, error) {
