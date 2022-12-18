@@ -104,6 +104,11 @@ paths:
           schema:
             type: integer
             format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaptureMonster'
       responses:
         '200':
           description: successful operation
@@ -320,6 +325,11 @@ components:
           type: string
         password:
           type: string
+    CaptureMonster:
+      type: object
+      properties:
+        captured:
+          type: boolean
   requestBodies:
     Monster:
       description: Monster object
@@ -338,6 +348,12 @@ components:
                 type: string
               password:
                 type: string
+    CaptureMonter:
+      description: Capture monster
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptureMonster'
   securitySchemes:
     api_key:
       type: apiKey
