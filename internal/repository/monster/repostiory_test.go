@@ -31,13 +31,8 @@ func TestGetListMonster(t *testing.T) {
 			name: "success",
 			args: args{
 				ctx: context.TODO(),
-				req: model.MonsterListRequest{
-					Query:         "monster",
-					QueryType:     []int{1, 2},
-					Sort:          "name",
-					SortDirection: model.SORT_DIRECTION_ASC,
-				},
-				id: 1,
+				req: model.MonsterListRequest{},
+				id:  1,
 			},
 			initMock: func() (*sqlx.DB, *sql.DB, sqlmock.Sqlmock) {
 				db, mock, _ := sqlmock.New()
@@ -106,13 +101,8 @@ func TestGetListMonster(t *testing.T) {
 			name: "fail",
 			args: args{
 				ctx: context.TODO(),
-				req: model.MonsterListRequest{
-					Query:         "monster",
-					QueryType:     []int{1, 2},
-					Sort:          "name",
-					SortDirection: model.SORT_DIRECTION_ASC,
-				},
-				id: 1,
+				req: model.MonsterListRequest{},
+				id:  1,
 			},
 			initMock: func() (*sqlx.DB, *sql.DB, sqlmock.Sqlmock) {
 				db, mock, _ := sqlmock.New()

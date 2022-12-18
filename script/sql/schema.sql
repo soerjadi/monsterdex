@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS users (
     name varchar(100) not null,
     email varchar(100) not null,
     password varchar(100) not null,
+    role int not null default(0),
     created_at timestamp not null,
     updated_at timestamp not null
 );
