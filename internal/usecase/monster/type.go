@@ -7,6 +7,8 @@ import (
 	"github.com/soerjadi/monsterdex/internal/repository/monster"
 )
 
+//go:generate mockgen -package=mocks -mock_names=Usecase=MockMonsterUsecase -destination=../../mocks/monster_usecase_mock.go -source=type.go
+
 type Usecase interface {
 	GetListMonster(ctx context.Context, req model.MonsterListRequest, userID int64) ([]model.Monster, error)
 	GetDetailMonster(ctx context.Context, id, userID int64) (model.Monster, error)
